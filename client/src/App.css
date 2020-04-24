@@ -90,3 +90,7 @@ li {
 li:hover {
   background-color: #eee;
 }
+.makerPopup{
+  width: 50%;
+  height: 40%;
+}

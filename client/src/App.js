@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import getWeb3 from "./getWeb3";
 import MapContract from "./contracts/Map.json"
 import MyOracle from "./contracts/myOracle.json";
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import Popup from "reactjs-popup"
+import Popupl from "reactjs-popup"
 import 'react-notifications/lib/notifications.css';
 import Callback from "./contracts/Callback.json"
 import "./App.css";
@@ -19,7 +19,7 @@ class App extends Component {
   state = {
     web3: null, accounts: null, contract: null, open: false, coordinate: null, markers: [], blockNo: null, networkId: null,
     listToOracleTimeout: null, monitorMapperTimeout: null, checkMakersTimeout: null, oracleContract: null, monitorMarkerTimeout: null,
-    fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
+    fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
   };
 
   componentDidMount = async () => {
@@ -43,7 +43,7 @@ class App extends Component {
         MyOracle.abi,
         OracleDeployedNetwork && OracleDeployedNetwork.address
       );
-      console.log('qqq',oracleInstance)
+      console.log('qqq', oracleInstance)
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({
@@ -117,12 +117,16 @@ class App extends Component {
     var y = setTimeout(AppSelf.checkMakers, 2000);
     AppSelf.setState({ checkMakersTimeout: y });
     const b = AppSelf.state.fromBlock;
+    if (!b) {
+      console.log('in checkMarker: bypass',b);
+      return;
+    }
     console.log('in checkMarkers: ' + b);
     //console.log('555',AppSelf.state.contract)
     // console.log('test1', AppSelf.state.contract.events.addMarker({
     //   fromBlock: b, toBlock: 'latest'
     // }))
-    AppSelf.state.contract.events.notification({
+    AppSelf.state.contract.events.Notification({
       fromBlock: b, toBlock: 'latest'
     })
       .on('data', function (event) {
@@ -153,8 +157,7 @@ class App extends Component {
   }
 
   processOracleData(callback_address, data) {
-    console.log('in processOracleData:' + data);
-
+    return data
   }
   sendDataToBlockchain = async (address, data) => {
     if (!address) return;
@@ -163,15 +166,15 @@ class App extends Component {
       Callback.abi,
       address
     );
-    console.log(contractToCall); // the contract to be called back
-    console.log(AppSelf.state.contract); // for our comparison only
+    //console.log('1112', contractToCall); // the contract to be called back
+    //console.log('2223', AppSelf.state.contract); // for our comparison only
     var callerAC = AppSelf.state.accounts[0];
     var parameter = data; // X wins the game.
     var prefix = "contractToCall.methods";
     var method = "." + Callback.abi[0].name + "('" + parameter + "')"; // callback function
     var sendTx = "." + "send({ from:'" + callerAC + "', gas: 80000 })";
     var wholeCall = prefix + method + sendTx;
-    console.log(wholeCall); // for our visualization of the call only
+    //console.log(wholeCall); // for our visualization of the call only
     eval(wholeCall);
   }
   handleStart = (value) => {
@@ -183,7 +186,7 @@ class App extends Component {
   getPastHistory() {
     MarkersTimestamps = [];
     MarkerName = [];
-    AppSelf.state.contract.getPastEvents("notification", { fromBlock: 0, toBlock: 'latest' },
+    AppSelf.state.contract.getPastEvents("Notification", { fromBlock: 0, toBlock: 'latest' },
       (error, result) => { })
       .then((events) => {
         if (events.length > 0) {
@@ -214,7 +217,7 @@ class App extends Component {
     var end = new Date(this.state.endDate + "Z");
     var startTS = Math.round((new Date(start)).getTime() / 1000) - (8 * 3600);
     var endTS = Math.round((new Date(end)).getTime() / 1000) - (8 * 3600);
-    console.log('22s',startTS + " ==> " + endTS)
+    console.log('22s', startTS + " ==> " + endTS)
     rows = [];
     for (var i = 0; i < MarkerName.length; i++) {
       if (MarkersTimestamps[i] > startTS && MarkersTimestamps[i] < endTS) {
@@ -240,21 +243,18 @@ class App extends Component {
     var z = setTimeout(AppSelf.listToOracle, 2000);
     AppSelf.setState({ listToOracleTimeout: z });
     const b = AppSelf.state.fromBlock;
-    console.log('000', AppSelf.state.oracleContract)
+    //console.log('000', AppSelf.state.oracleContract)
     AppSelf.printHistory();
-    console.log('test', AppSelf.state.oracleContract.events.ToOracle({
-      fromBlock: b, toBlock: 'latest'
-    }))
     AppSelf.state.oracleContract.events.ToOracle({
       fromBlock: b, toBlock: 'latest'
     })
       .on('data', function (event) {
-
+        console.log('098', event)
         if (event.blockNumber <= MarkerCount) return;
         MarkerCount = event.blockNumber;
         console.log('123', event.returnValues[0], event.returnValues[1])
-        var result = this.processOracleData(event.returnValues[0], event.returnValues[1]);
-        this.sendDataToBlockchain(event.returnValues[0], result);
+        var result = AppSelf.processOracleData(event.returnValues[0], event.returnValues[1]);
+        AppSelf.sendDataToBlockchain(event.returnValues[0], result);
       }
       )
       .on('error', console.error);
@@ -262,21 +262,29 @@ class App extends Component {
 
   popUp() {
     return (
-      <Popup open={this.state.open} closeOnDocumentClick onClose={() => {
+      <Popupl open={this.state.open} closeOnDocumentClick onClose={() => {
         this.setState({ open: false })
       }}>
-
-        <button onClick={async () => {
-          console.log(this.state.coordinate.toString())
-          await this.state.contract.methods.insertData(this.state.coordinate.toString()).send({ from: this.state.accounts[0] })
-          this.setState({ open: false })
-        }}>Confirm?</button>
-      </Popup>
+        <form>
+          Event: <input type="text" placeholder="Write down the title...." />
+          <br />
+        Description: <input type="text" placeholder="Write down the description...." />
+          <br />
+        Happaning?
+        Yes<input type="checkBox" /> No<input type="checkBox" />
+          <br />
+          <button onClick={async () => {
+            console.log(this.state.coordinate.toString())
+            await this.state.contract.methods.insertData(this.state.coordinate.toString()).send({ from: this.state.accounts[0] })
+            this.setState({ open: false })
+          }}>Confirm?</button>
+        </form>
+      </Popupl>
     );
   }
   showHistory() {
     return this.state.markersHistory.map(historyList =>
-      <li key={historyList.key}> Block No: {historyList.blockNumber} <br /> {historyList.address}</li>)
+      <li key={historyList.key}> Block No: {historyList.blockNumber} <br /> Location: {historyList.returnValues.message} {historyList.address}</li>)
   }
   render() {
     if (!this.state.web3) {
@@ -306,7 +314,9 @@ class App extends Component {
             {
               this.state.markers.map(x => {
                 return (
+
                   <Marker position={x}>
+                    <Popup> Address: [{x[0]}, {x[1]}]</Popup>
                   </Marker>
                 )
               })

@@ -4,7 +4,7 @@ contract Map{
     string[] public data;
     address oracle_address;
     event Notification(address return_address, string message);
-    event addMarker(string);
+    //event addMarker(string);
     function insertData(string memory _data) public {
         data.push(_data);
         myOracle(oracle_address).getOracleData(address(this), _data);
