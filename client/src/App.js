@@ -20,7 +20,7 @@ class App extends Component {
     web3: null, accounts: null, contract: null, open: false, coordinate: null, markers: [], blockNo: null, networkId: null,
     listToOracleTimeout: null, monitorMapperTimeout: null, checkMakersTimeout: null, oracleContract: null, monitorMarkerTimeout: null,
     fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
-     eventTitle: '',eventDesc: '',eventStatus: false,
+     eventTitle: '',eventDesc: '',eventStatus: false, historyLocation: [],
   };
 
   componentDidMount = async () => {
@@ -218,9 +218,8 @@ class App extends Component {
   printHistory = () => {
     var start = new Date(this.state.startDate + "Z");
     var end = new Date(this.state.endDate + "Z");
-    var startTS = Math.round((new Date(start)).getTime() / 1000) - (8 * 3600);
+    var startTS = Math.round((new Date()).getTime() / 1000) - (8 * 3600);
     var endTS = Math.round((new Date(end)).getTime() / 1000) - (8 * 3600);
-    console.log('22s', startTS + " ==> " + endTS)
     rows = [];
     for (var i = 0; i < MarkerName.length; i++) {
       if (MarkersTimestamps[i] > startTS && MarkersTimestamps[i] < endTS) {
@@ -287,28 +286,55 @@ class App extends Component {
       </Popupl>
     );
   }
+  changeMap(location){
+    let address = location.split(',')
+    this.setState({
+      historyLocation: address
+    })
+  }
   showHistory() {
     console.log('help',this.state.markersHistory)
     return this.state.markersHistory.map(historyList =>
-      <li key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}> Block No: {historyList.blockNumber} 
+      <li onClick={()=>{this.changeMap(historyList.returnValues.message._address)}} key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}>
+      <button> Block No: {historyList.blockNumber} 
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}
       <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
       <br /> Location: {historyList.returnValues.message._address} 
-      <br />{historyList.address}</li>)
+      <br />{historyList.address}</button></li>)
   }
   render() {
    
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
-
+    console.log('lll',this.state.historyLocation)
     return (
       <div className="App" >
         <div className="menu" style={{ visibility: this.state.openMenu ? "visible" : "hidden" }}>
           <div className="picture">
+            {/* { this.state.historyLocation==[]?null: 
+         <Map center={[22.3193, 114.1694]} zoom={15} maxZoom={19} onclick={this.mapOnClick} style={{ width: this.state.openMenu ? '70%' : '100%' }}>
+         <TileLayer
+           url="	https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
+           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+         />
+         {
+           this.state.markers.map(x => {
+             return (
 
+               <Marker position={x}>
+                 <Popup> Address: [{x[0]}, {x[1]}]</Popup>
+               </Marker>
+             )
+           })
+         }
+
+       </Map>
+          
+        } */}
           </div>
+          <div style={{margin: 10,}}>History</div>
           <div className="history">
             <ol id="historyList">
               {this.showHistory()}
