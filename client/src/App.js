@@ -20,6 +20,7 @@ class App extends Component {
     web3: null, accounts: null, contract: null, open: false, coordinate: null, markers: [], blockNo: null, networkId: null,
     listToOracleTimeout: null, monitorMapperTimeout: null, checkMakersTimeout: null, oracleContract: null, monitorMarkerTimeout: null,
     fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
+     eventTitle: '',eventDesc: '',eventStatus: false,
   };
 
   componentDidMount = async () => {
@@ -43,7 +44,7 @@ class App extends Component {
         MyOracle.abi,
         OracleDeployedNetwork && OracleDeployedNetwork.address
       );
-      console.log('qqq', oracleInstance)
+      
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({
@@ -134,13 +135,15 @@ class App extends Component {
 
         // process the data in the transaction log for Winner event
         if (!AppSelf.state.fromBlock || AppSelf.state.fromBlock <= event.blockNumber) {
+          if(AppSelf.state.fromBlock == event.blockNumber){
           history.push(event)
+          }
           AppSelf.setState({
             blockNo: event.blockNumber,
             fromBlock: event.blockNumber,
             markersHistory: history
           });
-          console.log('344', event.blockNumber, event.returnValues)
+          console.log('344', event)
           // clear the two timeout events
           clearTimeout(AppSelf.state.monitorMapperTimeout);
           clearTimeout(AppSelf.state.checkMakersTimeout);
@@ -244,7 +247,6 @@ class App extends Component {
     AppSelf.setState({ listToOracleTimeout: z });
     const b = AppSelf.state.fromBlock;
     //console.log('000', AppSelf.state.oracleContract)
-    AppSelf.printHistory();
     AppSelf.state.oracleContract.events.ToOracle({
       fromBlock: b, toBlock: 'latest'
     })
@@ -259,34 +261,44 @@ class App extends Component {
       )
       .on('error', console.error);
   };
-
+  
   popUp() {
     return (
       <Popupl open={this.state.open} closeOnDocumentClick onClose={() => {
         this.setState({ open: false })
       }}>
         <form>
-          Event: <input type="text" placeholder="Write down the title...." />
+      
+          <label>Event:</label>
+          <input type="text" placeholder="Write down the title...." onChange={(event)=>{this.setState({eventTitle: event.target.value})}}/>
           <br />
-        Description: <input type="text" placeholder="Write down the description...." />
+          <label>Description:</label>
+        <input type="text" placeholder="Write down the description...."  onChange={(event)=>{this.setState({eventDesc: event.target.value})}}/>
           <br />
-        Happaning?
-        Yes<input type="checkBox" /> No<input type="checkBox" />
+          <label>Happaning?</label>
+        <input type="checkBox" value={this.state.eventStatus} onChange={()=>{this.setState({eventStatus: !this.state.eventStatus})}}/>
           <br />
           <button onClick={async () => {
-            console.log(this.state.coordinate.toString())
-            await this.state.contract.methods.insertData(this.state.coordinate.toString()).send({ from: this.state.accounts[0] })
-            this.setState({ open: false })
-          }}>Confirm?</button>
-        </form>
+    console.log('marked Event',this.state.eventTitle,this.state.eventDesc,this.state.eventStatus)
+    await this.state.contract.methods.insertData(this.state.eventTitle,this.state.eventDesc,this.state.eventStatus,this.state.coordinate.toString()).send({ from: this.state.accounts[0] })
+    this.setState({ open: false })
+  }}>Confirm?</button>
+          </form>
       </Popupl>
     );
   }
   showHistory() {
+    console.log('help',this.state.markersHistory)
     return this.state.markersHistory.map(historyList =>
-      <li key={historyList.key}> Block No: {historyList.blockNumber} <br /> Location: {historyList.returnValues.message} {historyList.address}</li>)
+      <li key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}> Block No: {historyList.blockNumber} 
+      <br /> Event: {historyList.returnValues.message.title} 
+      <br /> Description: {historyList.returnValues.message.description}
+      <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
+      <br /> Location: {historyList.returnValues.message._address} 
+      <br />{historyList.address}</li>)
   }
   render() {
+   
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
@@ -323,7 +335,7 @@ class App extends Component {
             }
 
           </Map>
-          <input type="button" id="Btn1" value="Menu" onClick={() => { this.setState({ openMenu: !this.state.openMenu }) }} class="btnStyle" />
+          <input type="button" id="Btn1" value="Menu" onClick={() => { this.setState({ openMenu: !this.state.openMenu }) }} className="btnStyle" />
         </div>
       </div>
     );
