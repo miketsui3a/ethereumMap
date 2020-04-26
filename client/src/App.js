@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 //import SimpleStorageContract from "./contracts/SimpleStorage.json";
 
+
 import getWeb3 from "./getWeb3";
 import MapContract from "./contracts/Map.json"
 import MyOracle from "./contracts/myOracle.json";
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import Popupl from "reactjs-popup"
-import 'react-notifications/lib/notifications.css';
+//import 'react-notifications/lib/notifications.css';
 import Callback from "./contracts/Callback.json"
 import "./App.css";
 var AppSelf
@@ -20,7 +21,7 @@ class App extends Component {
     web3: null, accounts: null, contract: null, open: false, coordinate: null, markers: [], blockNo: null, networkId: null,
     listToOracleTimeout: null, monitorMapperTimeout: null, checkMakersTimeout: null, oracleContract: null, monitorMarkerTimeout: null,
     fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
-     eventTitle: '',eventDesc: '',eventStatus: false, historyLocation: [],
+     eventTitle: '',eventDesc: '',eventStatus: false, historyLocation: [], smallMapCoor:null
   };
 
   componentDidMount = async () => {
@@ -266,9 +267,9 @@ class App extends Component {
       <Popupl open={this.state.open} closeOnDocumentClick onClose={() => {
         this.setState({ open: false })
       }}>
+        <div className="form">
         <form>
-      
-          <label>Event:</label>
+          <label style={{marginLeft:"42px"}}>Event:</label>
           <input type="text" placeholder="Write down the title...." onChange={(event)=>{this.setState({eventTitle: event.target.value})}}/>
           <br />
           <label>Description:</label>
@@ -283,6 +284,7 @@ class App extends Component {
     this.setState({ open: false })
   }}>Confirm?</button>
           </form>
+          </div>
       </Popupl>
     );
   }
@@ -296,7 +298,7 @@ class App extends Component {
     console.log('help',this.state.markersHistory)
     return this.state.markersHistory.map(historyList =>
       <li onClick={()=>{this.changeMap(historyList.returnValues.message._address)}} key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}>
-      <button> Block No: {historyList.blockNumber} 
+      <button onClick={()=>{this.setState({smallMapCoor:[parseInt(historyList.returnValues.message._address.split(",")[0]),parseInt(historyList.returnValues.message._address.split(",")[1])]})}}> Block No: {historyList.blockNumber} 
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}
       <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
@@ -313,26 +315,12 @@ class App extends Component {
       <div className="App" >
         <div className="menu" style={{ visibility: this.state.openMenu ? "visible" : "hidden" }}>
           <div className="picture">
-            {/* { this.state.historyLocation==[]?null: 
-         <Map center={[22.3193, 114.1694]} zoom={15} maxZoom={19} onclick={this.mapOnClick} style={{ width: this.state.openMenu ? '70%' : '100%' }}>
-         <TileLayer
-           url="	https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
-           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-         />
-         {
-           this.state.markers.map(x => {
-             return (
-
-               <Marker position={x}>
-                 <Popup> Address: [{x[0]}, {x[1]}]</Popup>
-               </Marker>
-             )
-           })
-         }
-
-       </Map>
-          
-        } */}
+          <Map center={this.state.smallMapCoor||[22.3193, 114.1694]} zoom={15} maxZoom={19} style={{ width: "100%", height:"30%"}}>
+            <TileLayer
+              url="	https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+          </Map>
           </div>
           <div style={{margin: 10,}}>History</div>
           <div className="history">
