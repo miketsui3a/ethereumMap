@@ -237,7 +237,7 @@ class App extends Component {
     }
   }
   timeConverter(UNIX_timestamp) {
-    var a = new Date(UNIX_timestamp * 1000);
+    var a = new Date(UNIX_timestamp*1000);
     var months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
     var year = a.getFullYear();
     var month = months[a.getMonth()];
@@ -302,13 +302,15 @@ class App extends Component {
   }
   showHistory() {
     console.log('help',this.state.markersHistory)
-    return this.state.markersHistory.map(historyList =>
+    return this.state.markersHistory.sort((a,b)=>a.returnValues.message._address.split(',')[2]<b.returnValues.message._address.split(',')[2]?1:-1).map(historyList =>
       <li onClick={()=>{this.changeMap(historyList.returnValues.message._address)}} key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}>
-      <button onClick={()=>{this.setState({smallMapCoor:[parseFloat(historyList.returnValues.message._address.split(",")[0]),parseFloat(historyList.returnValues.message._address.split(",")[1])]})}}> Block No: {historyList.blockNumber} 
+      <button onClick={()=>{this.setState({smallMapCoor:[parseFloat(historyList.returnValues.message._address.split(",")[0]),parseFloat(historyList.returnValues.message._address.split(",")[1])]})}}> 
+      Block No: {historyList.blockNumber} 
+      {/* Time: {this.timeConverter(historyList.returnValues.message._address.split(',')[2])} */}
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}
       <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
-      <br /> Coordinate: {historyList.returnValues.message._address} 
+      <br /> Coordinate:[{historyList.returnValues.message._address.split(',')[0]} , {historyList.returnValues.message._address.split(',')[1]}]
       <br /> Address: {historyList.address}</button></li>)
   }
   printM=()=>{
