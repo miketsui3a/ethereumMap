@@ -308,8 +308,8 @@ class App extends Component {
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}
       <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
-      <br /> Location: {historyList.returnValues.message._address} 
-      <br />{historyList.address}</button></li>)
+      <br /> Coordinate: {historyList.returnValues.message._address} 
+      <br /> Address: {historyList.address}</button></li>)
   }
   printM=()=>{
     if(this.state.smallMapCoor!==null){
