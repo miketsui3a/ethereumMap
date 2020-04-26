@@ -84,7 +84,7 @@ class App extends Component {
     })
     //console.log('123', tmp)
     // Update state with the result.
-    this.setState({ markers: tmp }
+    this.setState({markers: tmp}
       , function () {
         var x = setTimeout(this.monitorMarker, 2000);
         var y = setTimeout(this.checkMakers, 2000);
@@ -357,7 +357,10 @@ class App extends Component {
                 return (
 
                   <Marker position={x.slice(0,2)} opacity={(86400000-new Date().getTime()+x[2])/86400000}>
-                    <Popup> Address: [{x[0]}, {x[1]}]</Popup>
+                    <Popup> 
+                      Address: [{x[0]}, {x[1]}]
+                      Created Time: {new Date(x[2]).toString()}
+                    </Popup>
                   </Marker>
                 )
               })
