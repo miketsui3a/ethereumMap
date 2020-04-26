@@ -77,7 +77,10 @@ class App extends Component {
     //console.log('123444',response)
     let tmp = []
     response.map((x) => {
-      tmp.push([parseFloat(x.split(",")[0]), parseFloat(x.split(",")[1])])
+      let a = x.split(",")
+      if(new Date().getTime()-parseInt(a[2])<=86400000){
+        tmp.push([parseFloat(x.split(",")[0]), parseFloat(x.split(",")[1]),parseInt(x.split(",")[2])])
+      }
     })
     //console.log('123', tmp)
     // Update state with the result.
@@ -282,7 +285,7 @@ class App extends Component {
           <br />
           <button onClick={async () => {
     console.log('marked Event',this.state.eventTitle,this.state.eventDesc,this.state.eventStatus)
-    await this.state.contract.methods.insertData(this.state.eventTitle,this.state.eventDesc,this.state.eventStatus,this.state.coordinate.toString()).send({ from: this.state.accounts[0] })
+    await this.state.contract.methods.insertData(this.state.eventTitle,this.state.eventDesc,this.state.eventStatus,this.state.coordinate.toString()+","+new Date().getTime().toString()).send({ from: this.state.accounts[0] })
     this.setState({ open: false })
   }}>Confirm?</button>
           </form>
@@ -353,7 +356,7 @@ class App extends Component {
               this.state.markers.map(x => {
                 return (
 
-                  <Marker position={x}>
+                  <Marker position={x.slice(0,2)} opacity={(86400000-new Date().getTime()+x[2])/86400000}>
                     <Popup> Address: [{x[0]}, {x[1]}]</Popup>
                   </Marker>
                 )
