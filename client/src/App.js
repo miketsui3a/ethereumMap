@@ -21,11 +21,12 @@ class App extends Component {
     web3: null, accounts: null, contract: null, open: false, coordinate: null, markers: [], blockNo: null, networkId: null,
     listToOracleTimeout: null, monitorMapperTimeout: null, checkMakersTimeout: null, oracleContract: null, monitorMarkerTimeout: null,
     fromBlock: 0, selected: 0, markersHistory: [], openMenu: false, startDate: "2020-04-20T19:00:00", endDate: "2020-05-30T23:00:00",
-     eventTitle: '',eventDesc: '',eventStatus: false, historyLocation: [], smallMapCoor:null
+     eventTitle: '',eventDesc: '',eventStatus: false, historyLocation: [], smallMapCoor:null, locationName:null
   };
 
   componentDidMount = async () => {
     AppSelf = this;
+    //this.setState({markers:[[22.31756472184608,114.17150974273683,new Date().getTime()]]})
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -310,7 +311,6 @@ class App extends Component {
       <br /> Location: {historyList.returnValues.message._address} 
       <br />{historyList.address}</button></li>)
   }
-
   printM=()=>{
     if(this.state.smallMapCoor!==null){
       return (
@@ -357,9 +357,14 @@ class App extends Component {
                 return (
 
                   <Marker position={x.slice(0,2)} opacity={(86400000-new Date().getTime()+x[2])/86400000}>
-                    <Popup> 
-                      Address: [{x[0]}, {x[1]}]
-                      Created Time: {new Date(x[2]).toString()}
+                    <Popup onOpen={()=>{
+                      fetch(`https://api.opencagedata.com/geocode/v1/json?q=${x[0]}+${x[1]}&key=aeb31560ca0e48c9a774dc4cf20ff9ca`).then(data=>data.json()).then(x=>{
+                        this.setState({locationName: x.results[0].formatted})
+                      })
+                    }}> 
+                      Address: {this.state.locationName}<br/>
+                      Coordinate: [{x[0]}, {x[1]}]<br/>
+                      Created Time: {new Date(x[2]).toString()}<br/>            
                     </Popup>
                   </Marker>
                 )
