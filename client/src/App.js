@@ -298,12 +298,21 @@ class App extends Component {
     console.log('help',this.state.markersHistory)
     return this.state.markersHistory.map(historyList =>
       <li onClick={()=>{this.changeMap(historyList.returnValues.message._address)}} key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}>
-      <button onClick={()=>{this.setState({smallMapCoor:[parseInt(historyList.returnValues.message._address.split(",")[0]),parseInt(historyList.returnValues.message._address.split(",")[1])]})}}> Block No: {historyList.blockNumber} 
+      <button onClick={()=>{this.setState({smallMapCoor:[parseFloat(historyList.returnValues.message._address.split(",")[0]),parseFloat(historyList.returnValues.message._address.split(",")[1])]})}}> Block No: {historyList.blockNumber} 
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}
       <br /> Happaning: {historyList.returnValues.message.status? "Yes": "No"}
       <br /> Location: {historyList.returnValues.message._address} 
       <br />{historyList.address}</button></li>)
+  }
+
+  printM=()=>{
+    if(this.state.smallMapCoor!==null){
+      return (
+        <Marker position={this.state.smallMapCoor}>
+      </Marker>
+      )
+    }
   }
   render() {
    
@@ -320,6 +329,7 @@ class App extends Component {
               url="	https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
+            {this.printM()}
           </Map>
           </div>
           <div style={{margin: 10,}}>History</div>
