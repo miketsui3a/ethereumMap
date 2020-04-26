@@ -116,6 +116,7 @@ class App extends Component {
   }
   checkMakers() {
     var history = AppSelf.state.markersHistory
+    var tmpBlockNo = 0
     var y = setTimeout(AppSelf.checkMakers, 2000);
     AppSelf.setState({ checkMakersTimeout: y });
     const b = AppSelf.state.fromBlock;
@@ -136,7 +137,7 @@ class App extends Component {
 
         // process the data in the transaction log for Winner event
         if (!AppSelf.state.fromBlock || AppSelf.state.fromBlock <= event.blockNumber) {
-          if(AppSelf.state.fromBlock == event.blockNumber){
+          if(tmpBlockNo !=event.blockNumber){
           history.push(event)
           }
           AppSelf.setState({
@@ -144,6 +145,7 @@ class App extends Component {
             fromBlock: event.blockNumber,
             markersHistory: history
           });
+          tmpBlockNo = event.blockNumber
           console.log('344', event)
           // clear the two timeout events
           clearTimeout(AppSelf.state.monitorMapperTimeout);
