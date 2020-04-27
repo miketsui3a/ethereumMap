@@ -286,7 +286,7 @@ class App extends Component {
           <br />
           <button onClick={async () => {
     console.log('marked Event',this.state.eventTitle,this.state.eventDesc,this.state.eventStatus)
-    await this.state.contract.methods.insertData(this.state.eventTitle,this.state.eventDesc,this.state.eventStatus,this.state.coordinate.toString()+","+new Date().getTime().toString()).send({ from: this.state.accounts[0] })
+    await this.state.contract.methods.insertData(this.state.eventTitle,this.state.eventDesc,this.state.eventStatus,this.state.coordinate.toString()+","+new Date().getTime().toString(),new Date().getTime().toString()).send({ from: this.state.accounts[0] })
     this.setState({ open: false })
   }}>Confirm?</button>
           </form>
@@ -305,7 +305,7 @@ class App extends Component {
     return this.state.markersHistory.sort((a,b)=>a.returnValues.message._address.split(',')[2]<b.returnValues.message._address.split(',')[2]?1:-1).map(historyList =>
       <li onClick={()=>{this.changeMap(historyList.returnValues.message._address)}} key={historyList.key} style={{backgroundColor: historyList.returnValues.message.status? '#F97777': null}}>
       <button onClick={()=>{this.setState({smallMapCoor:[parseFloat(historyList.returnValues.message._address.split(",")[0]),parseFloat(historyList.returnValues.message._address.split(",")[1])]})}}> 
-      Block No: {historyList.blockNumber} 
+      Time: {new Date(parseInt(historyList.returnValues.message.time))} 
       {/* Time: {this.timeConverter(historyList.returnValues.message._address.split(',')[2])} */}
       <br /> Event: {historyList.returnValues.message.title} 
       <br /> Description: {historyList.returnValues.message.description}

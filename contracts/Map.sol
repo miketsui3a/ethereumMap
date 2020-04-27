@@ -6,19 +6,21 @@ contract Map{
         string description;
         bool status;
         string _address;
+        string time;
     }
     mapping(string => markerData) public marker; 
     string[] public data;
     address oracle_address;
     event Notification(address return_address, markerData message);
     //event addMarker(string);
-    function insertData(string memory title, string memory desc,bool status,string memory _data) public {
+    function insertData(string memory title, string memory desc,bool status,string memory _data, string memory time) public {
         data.push(_data);
         marker[_data].title = title;
         marker[_data].description = desc;
         marker[_data].status = status;
         marker[_data]._address = _data;
-        myOracle(oracle_address).getOracleData(address(this), _data);
+        marker[_data].time = time;
+        myOracle(oracle_address).getOracleData(address(this), _data, time);
     }
     function getData() public view returns(string[] memory){
 

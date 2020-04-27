@@ -15,6 +15,12 @@
           "internalType": "string",
           "name": "data",
           "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "time",
+          "type": "string"
         }
       ],
       "name": "ToOracle",
@@ -32,6 +38,11 @@
           "internalType": "string",
           "name": "data_input",
           "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "time",
+          "type": "string"
         }
       ],
       "name": "getOracleData",
@@ -41,25 +52,25 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"me\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"data\",\"type\":\"string\"}],\"name\":\"ToOracle\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"client_address\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"data_input\",\"type\":\"string\"}],\"name\":\"getOracleData\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol\":\"myOracle\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol\":{\"keccak256\":\"0x64f4f26c44745bac730a90aa14a73e8b5e549765e35b7ef57098b862995f066c\",\"urls\":[\"bzz-raw://f80249657ecc977e7a9ba75f4f3d803e47871ca5811c128fb387036caae9cf0e\",\"dweb:/ipfs/QmcXtvfMyx74WFewTd5AsVV5NS92xWUTT2YQyUgnaWWdrU\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5061019a806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063210d1a4014610030575b600080fd5b6100c76004803603604081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019064010000000081111561008357600080fd5b82018360208201111561009557600080fd5b803590602001918460018302840111640100000000831117156100b757600080fd5b90919293919293905050506100c9565b005b7f9220bf40e7f4a9d32bb47c3a2d9f2d3e671f2c389bdb09c88540f7b076d56762838383604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001806020018281038252848482818152602001925080828437600081840152601f19601f82011690508083019250505094505050505060405180910390a150505056fea265627a7a7231582069ee888368425419ee0c87f5734ab3828b104ee969e6e1fddae2fc25d7f432f564736f6c63430005100032",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063210d1a4014610030575b600080fd5b6100c76004803603604081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019064010000000081111561008357600080fd5b82018360208201111561009557600080fd5b803590602001918460018302840111640100000000831117156100b757600080fd5b90919293919293905050506100c9565b005b7f9220bf40e7f4a9d32bb47c3a2d9f2d3e671f2c389bdb09c88540f7b076d56762838383604051808473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001806020018281038252848482818152602001925080828437600081840152601f19601f82011690508083019250505094505050505060405180910390a150505056fea265627a7a7231582069ee888368425419ee0c87f5734ab3828b104ee969e6e1fddae2fc25d7f432f564736f6c63430005100032",
-  "sourceMap": "35:258:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;35:258:3;;;;;;;",
-  "deployedSourceMap": "35:258:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;35:258:3;;;;;;;;;;;;;;;;;;;124:167;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;124:167:3;;;;;;;;;;;;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;124:167:3;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;124:167:3;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;124:167:3;;;;;;;;;;;;:::i;:::-;;;235:36;244:14;260:10;;235:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;235:36:3;;;;;;;;;;;;;;;124:167;;;:::o",
-  "source": "pragma solidity >=0.4.21 <0.7.0;\n\n\ncontract myOracle {\n    //O1\n    event ToOracle(address me, string data); //event K\n\n    function getOracleData(address client_address, string calldata data_input)\n        external\n    {\n        emit ToOracle(client_address, data_input); // O1 emit K\n    }\n}\n",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"me\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"data\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"time\",\"type\":\"string\"}],\"name\":\"ToOracle\",\"type\":\"event\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"client_address\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"data_input\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"time\",\"type\":\"string\"}],\"name\":\"getOracleData\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol\":\"myOracle\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol\":{\"keccak256\":\"0x9c2ce5d30ef8f40145ab2d606ffbd75758e4d4a43fce12d4cf4041b95f577385\",\"urls\":[\"bzz-raw://2aee44fc3cbb1f0bdff49f1ff5afb563993a40f2de8641a94f5cac0750bb9e4a\",\"dweb:/ipfs/QmTFsPnQuNp79HjgX7PNSf5d7ZQKirhPg3UiDVGmRXgNVc\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610225806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80632af8082014610030575b600080fd5b61011c6004803603606081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019064010000000081111561008357600080fd5b82018360208201111561009557600080fd5b803590602001918460018302840111640100000000831117156100b757600080fd5b9091929391929390803590602001906401000000008111156100d857600080fd5b8201836020820111156100ea57600080fd5b8035906020019184600183028401116401000000008311171561010c57600080fd5b909192939192939050505061011e565b005b7f1bc729126068ce2dbd03d08cad2448a12d2882ed5b68c94c4eb22ed3510741e88585858585604051808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001806020018381038352878782818152602001925080828437600081840152601f19601f8201169050808301925050508381038252858582818152602001925080828437600081840152601f19601f82011690508083019250505097505050505050505060405180910390a1505050505056fea265627a7a72315820752a9a3dca116ed77f6bfa3e047f8ad4b26cec2d96f30cb66f29b9325acd1af364736f6c63430005100032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80632af8082014610030575b600080fd5b61011c6004803603606081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291908035906020019064010000000081111561008357600080fd5b82018360208201111561009557600080fd5b803590602001918460018302840111640100000000831117156100b757600080fd5b9091929391929390803590602001906401000000008111156100d857600080fd5b8201836020820111156100ea57600080fd5b8035906020019184600183028401116401000000008311171561010c57600080fd5b909192939192939050505061011e565b005b7f1bc729126068ce2dbd03d08cad2448a12d2882ed5b68c94c4eb22ed3510741e88585858585604051808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001806020018381038352878782818152602001925080828437600081840152601f19601f8201169050808301925050508381038252858582818152602001925080828437600081840152601f19601f82011690508083019250505097505050505050505060405180910390a1505050505056fea265627a7a72315820752a9a3dca116ed77f6bfa3e047f8ad4b26cec2d96f30cb66f29b9325acd1af364736f6c63430005100032",
+  "sourceMap": "35:299:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;35:299:3;;;;;;;",
+  "deployedSourceMap": "35:299:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;35:299:3;;;;;;;;;;;;;;;;;;;137:195;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;137:195:3;;;;;;;;;;;;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;137:195:3;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;137:195:3;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;137:195:3;;;;;;;;;;;;;;21:11:-1;8;5:28;2:2;;;46:1;43;36:12;2:2;137:195:3;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;137:195:3;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;137:195:3;;;;;;;;;;;;:::i;:::-;;;270:42;279:14;295:10;;307:4;;270:42;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;270:42:3;;;;;;;;;;;;;;;;;30:3:-1;22:6;14;1:33;99:1;93:3;85:6;81:16;74:27;137:4;133:9;126:4;121:3;117:14;113:30;106:37;;169:3;161:6;157:16;147:26;;270:42:3;;;;;;;;;;;;;;;;;;137:195;;;;;:::o",
+  "source": "pragma solidity >=0.4.21 <0.7.0;\n\n\ncontract myOracle {\n    //O1\n    event ToOracle(address me, string data, string time); //event K\n\n    function getOracleData(address client_address, string calldata data_input, string calldata time)\n        external\n    {\n        emit ToOracle(client_address, data_input, time); // O1 emit K\n    }\n}\n",
   "sourcePath": "/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol",
   "ast": {
     "absolutePath": "/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol",
     "exportedSymbols": {
       "myOracle": [
-        207
+        224
       ]
     },
-    "id": 208,
+    "id": 225,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 187,
+        "id": 199,
         "literals": [
           "solidity",
           ">=",
@@ -78,9 +89,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 207,
+        "id": 224,
         "linearizedBaseContracts": [
-          207
+          224
         ],
         "name": "myOracle",
         "nodeType": "ContractDefinition",
@@ -88,20 +99,20 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 193,
+            "id": 207,
             "name": "ToOracle",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 192,
+              "id": 206,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 189,
+                  "id": 201,
                   "indexed": false,
                   "name": "me",
                   "nodeType": "VariableDeclaration",
-                  "scope": 193,
+                  "scope": 207,
                   "src": "83:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -110,7 +121,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 188,
+                    "id": 200,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "83:7:3",
@@ -125,11 +136,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 191,
+                  "id": 203,
                   "indexed": false,
                   "name": "data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 193,
+                  "scope": 207,
                   "src": "95:11:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -138,7 +149,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 190,
+                    "id": 202,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "95:6:3",
@@ -149,17 +160,44 @@
                   },
                   "value": null,
                   "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 205,
+                  "indexed": false,
+                  "name": "time",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 207,
+                  "src": "108:11:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 204,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
                 }
               ],
-              "src": "82:25:3"
+              "src": "82:38:3"
             },
-            "src": "68:40:3"
+            "src": "68:53:3"
           },
           {
             "body": {
-              "id": 205,
+              "id": 222,
               "nodeType": "Block",
-              "src": "220:71:3",
+              "src": "255:77:3",
               "statements": [
                 {
                   "eventCall": {
@@ -167,12 +205,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 201,
+                        "id": 217,
                         "name": "client_address",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 195,
-                        "src": "244:14:3",
+                        "referencedDeclaration": 209,
+                        "src": "279:14:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -180,12 +218,25 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 202,
+                        "id": 218,
                         "name": "data_input",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 197,
-                        "src": "260:10:3",
+                        "referencedDeclaration": 211,
+                        "src": "295:10:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 219,
+                        "name": "time",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 213,
+                        "src": "307:4:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_calldata_ptr",
                           "typeString": "string calldata"
@@ -201,20 +252,24 @@
                         {
                           "typeIdentifier": "t_string_calldata_ptr",
                           "typeString": "string calldata"
+                        },
+                        {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
                         }
                       ],
-                      "id": 200,
+                      "id": 216,
                       "name": "ToOracle",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 193,
-                      "src": "235:8:3",
+                      "referencedDeclaration": 207,
+                      "src": "270:8:3",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$returns$__$",
-                        "typeString": "function (address,string memory)"
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (address,string memory,string memory)"
                       }
                     },
-                    "id": 203,
+                    "id": 220,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -222,36 +277,36 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "235:36:3",
+                    "src": "270:42:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 204,
+                  "id": 221,
                   "nodeType": "EmitStatement",
-                  "src": "230:41:3"
+                  "src": "265:47:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 206,
+            "id": 223,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getOracleData",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 198,
+              "id": 214,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 195,
+                  "id": 209,
                   "name": "client_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 206,
-                  "src": "147:22:3",
+                  "scope": 223,
+                  "src": "160:22:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -259,10 +314,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 194,
+                    "id": 208,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "147:7:3",
+                    "src": "160:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -274,11 +329,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 197,
+                  "id": 211,
                   "name": "data_input",
                   "nodeType": "VariableDeclaration",
-                  "scope": 206,
-                  "src": "171:26:3",
+                  "scope": 223,
+                  "src": "184:26:3",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -286,10 +341,36 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 196,
+                    "id": 210,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "171:6:3",
+                    "src": "184:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 213,
+                  "name": "time",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 223,
+                  "src": "212:20:3",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 212,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "212:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -299,39 +380,39 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "146:52:3"
+              "src": "159:74:3"
             },
             "returnParameters": {
-              "id": 199,
+              "id": 215,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "220:0:3"
+              "src": "255:0:3"
             },
-            "scope": 207,
-            "src": "124:167:3",
+            "scope": 224,
+            "src": "137:195:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 208,
-        "src": "35:258:3"
+        "scope": 225,
+        "src": "35:299:3"
       }
     ],
-    "src": "0:294:3"
+    "src": "0:335:3"
   },
   "legacyAST": {
     "absolutePath": "/Users/miketsui/Desktop/school/cs4389/assignment/contracts/myOracle.sol",
     "exportedSymbols": {
       "myOracle": [
-        207
+        224
       ]
     },
-    "id": 208,
+    "id": 225,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 187,
+        "id": 199,
         "literals": [
           "solidity",
           ">=",
@@ -350,9 +431,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 207,
+        "id": 224,
         "linearizedBaseContracts": [
-          207
+          224
         ],
         "name": "myOracle",
         "nodeType": "ContractDefinition",
@@ -360,20 +441,20 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 193,
+            "id": 207,
             "name": "ToOracle",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 192,
+              "id": 206,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 189,
+                  "id": 201,
                   "indexed": false,
                   "name": "me",
                   "nodeType": "VariableDeclaration",
-                  "scope": 193,
+                  "scope": 207,
                   "src": "83:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -382,7 +463,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 188,
+                    "id": 200,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "83:7:3",
@@ -397,11 +478,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 191,
+                  "id": 203,
                   "indexed": false,
                   "name": "data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 193,
+                  "scope": 207,
                   "src": "95:11:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -410,7 +491,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 190,
+                    "id": 202,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "95:6:3",
@@ -421,17 +502,44 @@
                   },
                   "value": null,
                   "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 205,
+                  "indexed": false,
+                  "name": "time",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 207,
+                  "src": "108:11:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 204,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "108:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
                 }
               ],
-              "src": "82:25:3"
+              "src": "82:38:3"
             },
-            "src": "68:40:3"
+            "src": "68:53:3"
           },
           {
             "body": {
-              "id": 205,
+              "id": 222,
               "nodeType": "Block",
-              "src": "220:71:3",
+              "src": "255:77:3",
               "statements": [
                 {
                   "eventCall": {
@@ -439,12 +547,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 201,
+                        "id": 217,
                         "name": "client_address",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 195,
-                        "src": "244:14:3",
+                        "referencedDeclaration": 209,
+                        "src": "279:14:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -452,12 +560,25 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 202,
+                        "id": 218,
                         "name": "data_input",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 197,
-                        "src": "260:10:3",
+                        "referencedDeclaration": 211,
+                        "src": "295:10:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 219,
+                        "name": "time",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 213,
+                        "src": "307:4:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_calldata_ptr",
                           "typeString": "string calldata"
@@ -473,20 +594,24 @@
                         {
                           "typeIdentifier": "t_string_calldata_ptr",
                           "typeString": "string calldata"
+                        },
+                        {
+                          "typeIdentifier": "t_string_calldata_ptr",
+                          "typeString": "string calldata"
                         }
                       ],
-                      "id": 200,
+                      "id": 216,
                       "name": "ToOracle",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 193,
-                      "src": "235:8:3",
+                      "referencedDeclaration": 207,
+                      "src": "270:8:3",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$returns$__$",
-                        "typeString": "function (address,string memory)"
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (address,string memory,string memory)"
                       }
                     },
-                    "id": 203,
+                    "id": 220,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -494,36 +619,36 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "235:36:3",
+                    "src": "270:42:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 204,
+                  "id": 221,
                   "nodeType": "EmitStatement",
-                  "src": "230:41:3"
+                  "src": "265:47:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 206,
+            "id": 223,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getOracleData",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 198,
+              "id": 214,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 195,
+                  "id": 209,
                   "name": "client_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 206,
-                  "src": "147:22:3",
+                  "scope": 223,
+                  "src": "160:22:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -531,10 +656,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 194,
+                    "id": 208,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "147:7:3",
+                    "src": "160:7:3",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -546,11 +671,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 197,
+                  "id": 211,
                   "name": "data_input",
                   "nodeType": "VariableDeclaration",
-                  "scope": 206,
-                  "src": "171:26:3",
+                  "scope": 223,
+                  "src": "184:26:3",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -558,10 +683,36 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 196,
+                    "id": 210,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "171:6:3",
+                    "src": "184:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 213,
+                  "name": "time",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 223,
+                  "src": "212:20:3",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 212,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "212:6:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -571,26 +722,26 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "146:52:3"
+              "src": "159:74:3"
             },
             "returnParameters": {
-              "id": 199,
+              "id": 215,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "220:0:3"
+              "src": "255:0:3"
             },
-            "scope": 207,
-            "src": "124:167:3",
+            "scope": 224,
+            "src": "137:195:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 208,
-        "src": "35:258:3"
+        "scope": 225,
+        "src": "35:299:3"
       }
     ],
-    "src": "0:294:3"
+    "src": "0:335:3"
   },
   "compiler": {
     "name": "solc",
@@ -617,15 +768,40 @@
           ],
           "name": "ToOracle",
           "type": "event"
+        },
+        "0x1bc729126068ce2dbd03d08cad2448a12d2882ed5b68c94c4eb22ed3510741e8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "me",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "data",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "time",
+              "type": "string"
+            }
+          ],
+          "name": "ToOracle",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x1d027Be4AC9F0D058ff92800a1Af6B4d287A20F3",
-      "transactionHash": "0x8a520ade8aabbe15458aaa568560714e957f05f48522407b30c1a77de14167d7"
+      "address": "0x8B44974691F2Ba827092908314d472c958B6fb06",
+      "transactionHash": "0x4478216a9e46e3c818393c7b8126062f16e0395822e1575955fbf064d57afe59"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-04-26T13:22:24.101Z",
+  "updatedAt": "2020-04-27T07:15:39.375Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
